@@ -28,7 +28,7 @@
             color: white;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
             margin: 0;
-            text-decoration: none; /* Ensures no underline */
+            text-decoration: none;
         }
 
         .navbar {
@@ -53,7 +53,7 @@
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
         }
 
-        .navbar a:hover, .navbar a.active {
+        .navbar a:hover, .navbar a:active {
             background-color:#690033;
             color: white;
         }
@@ -65,7 +65,6 @@
             padding: 20px;
             margin: 0 10px;
             flex-grow: 1;
-            display: none; /* Hide content by default */
         }
 
         .command-section {
@@ -74,11 +73,12 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: opacity 0.3s ease-in-out;
+            display: none; /* Hide content by default */
         }
 
-        .command-section.active {
+        /* Show active section based on target */
+        .command-section:target {
             display: block;
-            opacity: 1;
         }
 
         .box {
@@ -134,50 +134,25 @@
             }
         }
     </style>
-    <script>
-        function showSection(id) {
-            var sections = document.getElementsByClassName('command-section');
-            var links = document.querySelectorAll('.navbar a');
-            var content = document.querySelector('.content');
-
-            // Hide all sections and content
-            for (var i = 0; i < sections.length; i++) {
-                sections[i].classList.remove('active');
-            }
-            content.style.display = 'none';  // Hide content by default
-
-            // Remove active class from all links
-            links.forEach(link => link.classList.remove('active'));
-
-            // Show the selected section and set the active link
-            document.getElementById(id).classList.add('active');
-            content.style.display = 'block';  // Show content after section is active
-
-            const activeLink = document.querySelector(`.navbar a[href="#${id}"]`);
-            activeLink.classList.add('active');
-        }
-
-        window.onload = function() {
-            showSection('apropos');
-        };
-    </script>
 </head>
 <body>
     <div class="header">
-            <h1>Help and Information Command</h1>
+        <h1>Help and Information Command</h1>
         <p style="color: white;">
            <strong> The Help and Information Command provides users with quick access to guidance and essential details about a system or application. By using this command, users can learn how to navigate features, troubleshoot common issues, and understand the functionality of different tools. It typically includes step-by-step instructions, tips, and links to detailed resources, ensuring users have the support they need to maximize their experience efficiently.</strong>
         </p>
     </div>
 
     <div class="navbar">
-        <a href="#apropos" onclick="showSection('apropos')">apropos</a>
-        <a href="#alias" onclick="showSection('alias')">alias</a>
-        <a href="#info" onclick="showSection('info')">info</a>
-        <a href="#uname" onclick="showSection('uname')">uname</a>
-        <a href="#du" onclick="showSection('du')">du</a>
-        <a href="#man" onclick="showSection('man')">man</a>
-        <a href="#mount" onclick="showSection('mount')">mount</a>
+        <a href="#apropos">apropos</a>
+        <a href="#alias">alias</a>
+        <a href="#info">info</a>
+        <a href="#uname">uname</a>
+        <a href="#du">du</a>
+        <a href="#man">man</a>
+        <a href="#mount">mount</a>
+        <a href="#ln">ln</a>
+        <a href="#df">df</a>
     </div>
 
     <div class="content">
@@ -362,6 +337,63 @@
         
               </ul></div></p>
         </div>
+    </div>
+
+    <div id="ln" class="command-section">
+        <h2 style="color: purple;">ln</h2>
+        <p>The ‘ln’ command in Linux is a powerful utility that allows you to create links between files. These links can either be hard links or soft (symbolic) links. If you’re unfamiliar with these concepts, check out our detailed guide on Hard and Soft Links in Linux to understand their differences, use cases, and how they affect file management.</p>
+        <div class="box">
+        <h3>Purpose</h3>
+        <p>It is used to display system information, such as the kernel name, version, and architecture of the machine.</p>
+        </div>
+        <div class="box">
+        <h3>Usage</h3>
+        <pre><code> ln [OPTION]... [-T] TARGET LINK_NAME   (1st form)<br>
+            ln [OPTION]... TARGET... DIRECTORY     (2nd form)<br>
+            ln [OPTION]... -t DIRECTORY TARGET...  (3rd form)<br></code></pre>
+        </div>
+        <div class="box">
+        <h3>Example:</h3>
+        <img src="ln.jpg" alt="Illustration of cut command usage" style="max-width:40%; height:auto;">
+        </div>
+        <div class="box">
+        <h3>Common Use Cases</h3>
+        <p><ul>
+            <ul>
+                <li>Simplify access to frequently used files or directories using symbolic links.</li>
+               <li>Create hard links for identical copies of files to save disk space.</li>
+               <li>Use symbolic links to reference files or directories located on different partitions.</li>
+              </ul>
+    
+          </ul></div></p>
+    </div>
+
+    <div id="df" class="command-section">
+        <h2 style="color: purple;">df</h2>
+        <p>The ‘df’ command stands for “disk free” and is used to display information about the file systems on your Linux system. It provides a snapshot of disk usage, showing the total space, used space, available space, and the percentage of use for each mounted file system.<br><br>
+            If no file name is passed as an argument with the ‘df‘ command, it shows the space available on all currently mounted file systems.
+            This is something you might want to know because the ‘df’ command is not able to show the space available on unmounted file systems, and the reason for this is that doing this on some systems requires very deep knowledge of file system structures.
+            By default, ‘df’ shows the disk space in 1K blocks.</p>
+        <div class="box">
+        <h3>Purpose</h3>
+        <p>Supports multiple output formats (human-readable, block-based, etc.).</p>
+        </div>
+        <div class="box">
+        <h3>Usage</h3>
+        <pre><code>df [OPTION]...[FILE]...</code></pre>
+        </div>
+        <div class="box">
+        <h3>Example:</h3>
+        <img src="df.jpg.jpg" alt="Illustration of cut command usage" style="max-width:40%; height:auto;">
+        </div>
+        <div class="box">
+        <h3>Common Use Cases</h3>
+        <p><ul>
+            <li>Monitoring disk usage on critical partitions (/, /var, /home).</li>
+            <li>Planning for storage upgrades.</li>
+            <li>Identifying filesystems with unusual usage patterns.</li>
+    
+          </ul></div></p>
     </div>
 
     <div class="footer">
